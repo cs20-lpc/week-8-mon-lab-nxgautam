@@ -35,9 +35,10 @@ ArrayStack<T>::~ArrayStack() {
 template <typename T>
 void ArrayStack<T>::clear() {
     // TODO
-
-
+    delete [] buffer;
+    buffer = nullptr;
     this->length = 0;
+    this->maxSize = 0;
 
    /*while(!this->isEmpty())
     {
@@ -51,7 +52,7 @@ template <typename T>
 void ArrayStack<T>::copy(const ArrayStack<T>& copyObj) {
     // TODO
 
-  maxSize = copyObj.maxSize;
+    this->maxSize = copyObj.maxSize;
     this->length = copyObj.length;
     buffer = new T[maxSize];
     for(int i = 0; i < this->length; i++)
@@ -94,7 +95,7 @@ T ArrayStack<T>::peek() const {
 
     if(this->isEmpty())
     {
-        throw runtime_error("Stack is empty!");
+        throw string("Stack is empty!");
     }
 
 
@@ -106,10 +107,12 @@ T ArrayStack<T>::peek() const {
 template <typename T>
 void ArrayStack<T>::pop() {
     // TODO
-    if(!this->isEmpty())
-    {
-        this->length--;
-    }
+   if(isEmpty())
+   {
+    throw string("Stack is empty!");
+   }
+
+   this->length--;
 
 
 }
@@ -120,11 +123,10 @@ void ArrayStack<T>::push(const T& elem) {
     // TODO
 
 
-    if(this->isFull())
-    {
-        return;
-    }
-
+   if(isFull())
+   {
+    throw std::string("Stack is full!");
+   }
 
     buffer[this->length++] = elem;
    
